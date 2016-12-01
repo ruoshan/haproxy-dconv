@@ -46,26 +46,28 @@ def main():
     optparser = OptionParser(description='Generate HTML Document from HAProxy configuation.txt',
                           version=VERSION,
                           usage=usage)
-    optparser.add_option('--git-directory','-g', help='Optional git directory for input files, to determine haproxy details')
+    #optparser.add_option('--git-directory','-g', help='Optional git directory for input files, to determine haproxy details')
     optparser.add_option('--output-directory','-o', default='.', help='Destination directory to store files, instead of the current working directory')
     optparser.add_option('--base','-b', default = '', help='Base directory for relative links')
+    optparser.add_option('--version', '-v', help='HAProxy doc version')
     (option, files) = optparser.parse_args()
 
-    if not files:
+    if not files or not option.version:
         optparser.print_help()
         exit(1)
 
     option.output_directory = os.path.abspath(option.output_directory)
-    if option.git_directory:
-        option.git_directory = os.path.abspath(option.git_directory)
+    #if option.git_directory:
+    #    option.git_directory = os.path.abspath(option.git_directory)
 
     os.chdir(os.path.dirname(__file__))
 
-    VERSION = get_git_version()
-    if not VERSION:
-        sys.exit(1)
+    #VERSION = get_git_version()
+    #if not VERSION:
+    #    sys.exit(1)
 
-    HAPROXY_GIT_VERSION = get_haproxy_git_version(option.git_directory)
+    #HAPROXY_GIT_VERSION = get_haproxy_git_version(option.git_directory)
+    HAPROXY_GIT_VERSION = option.version
 
     convert_all(files, option.output_directory, option.base)
 
