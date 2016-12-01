@@ -3,9 +3,9 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>${headers['title']} ${headers['version']} - ${headers['subtitle']}</title>
-		<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-		<link href="//raw.githubusercontent.com/thomaspark/bootswatch/v3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" />
-		<link href="${base}css/page.css?${version}" rel="stylesheet" />
+		<link href="../css/twitter-bootstrap.min.css" rel="stylesheet" />
+		<link href="../css/cerulean-bootstrap.min.css" rel="stylesheet" />
+		<link href="../css/page.css" rel="stylesheet" />
 	</head>
 	<body>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -16,7 +16,6 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="${base}">HAProxy Documentation</a>
 			</div>
 			<!-- /.navbar-header -->
 
@@ -27,59 +26,11 @@
 						<li class="${'active' if headers['subtitle'] == item[1] else ''}"><a href="${item[0]}">${item[1]}</a></li>
 					%endfor
 				</ul>
-				<ul class="nav navbar-nav">
-					<li><a href="http://www.haproxy.org/">HAProxy Home Page</a></li>
-				</ul>
 			</div>
 		</nav>
 		<!-- /.navbar-static-side -->
 
 		<div id="wrapper">
-
-			<div id="sidebar">
-				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active"><a href="#tab-summary" aria-controls="tab-summary" role="tab" data-toggle="tab">Summary</a></li>
-					% if keywords:
-					<li role="presentation"><a href="#tab-keywords" aria-controls="tab-keywords" role="tab" data-toggle="tab">Keywords</a></li>
-					% endif
-				</ul>
-				<div class="tab-content">
-					<div role="tabpanel" class="tab-pane active" id="tab-summary">
-						<%include file="_summary.html"/>
-					</div>
-					% if keywords:
-					<div role="tabpanel" class="tab-pane" id="tab-keywords">
-						<label for="filter">Filter</label>
-						<input class="form-control" type="text" name="filter" id="filter" onkeyup="filterKeywords(this.value)" placeholder="Enter keyword to search...">
-						<% previous_letter = None %>
-						% for keyword in keywords:
-							<% letter = keyword[0].upper() %>
-							%if letter != previous_letter:
-                                                                % if previous_letter:
-                                                                </div> <!-- /letter -->
-                                                                % endif
-								<div class="letter" id="letter-${letter}"><h4>${letter}</h4>
-								<% previous_letter = letter %>
-							%endif
-							<a class="list-group-item" href="#${keyword}">${keyword}</a>
-						% endfor
-						</div><!-- /letter -->
-					</div>
-					% endif
-				</div>
-
-				<p>
-					Keyboard navigation&nbsp;: <span id="keyboardNavStatus"></span>
-				</p>
-				<p>
-					You can use <strong>left</strong> and <strong>right</strong> arrow keys to navigate between chapters.<br>
-				</p>
-				<p class="text-right">
-					<small>Converted with <a href="https://github.com/cbonte/haproxy-dconv">haproxy-dconv</a> v<b>${version}</b> on <b>${date}</b></small>
-				</p>
-			</div>
-			<!-- /.sidebar -->
-
 			<div id="page-wrapper">
 				<div class="row">
 					<div class="col-lg-12">
@@ -111,8 +62,8 @@
 		</div>
 		<!-- /#wrapper -->
 
-		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
 		<script>
 			function filterKeywords(text) {
 				$('.letter').each(function(idx1, letter) {
@@ -195,7 +146,6 @@
 				}
 			})
 		</script>
-		${footer}
 		<a class="anchor" name="bottom"></a>
 	</body>
 </html>
