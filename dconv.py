@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Copyright 2012 Cyril Bonté
@@ -32,11 +32,11 @@ def main():
         description='Generate HTML Document from HAProxy configuration.txt',
         usage=usage
     )
-    optparser.add_option(
-        '--git-directory', '-g',
-        help='Optional git directory for input files, '
-        'to determine haproxy details'
-    )
+    #optparser.add_option(
+    #    '--git-directory', '-g',
+    #    help='Optional git directory for input files, '
+    #    'to determine haproxy details'
+    #)
     optparser.add_option(
         '--output-directory', '-o', default='.',
         help='Destination directory to store files, '
@@ -45,6 +45,7 @@ def main():
     optparser.add_option(
         '--base', '-b', default='', help='Base directory for relative links'
     )
+    optparser.add_option('--version', '-v', help='HAProxy doc version')
     (option, files) = optparser.parse_args()
 
     if not files:
@@ -52,19 +53,20 @@ def main():
         exit(1)
 
     option.output_directory = os.path.abspath(option.output_directory)
-    if option.git_directory:
-        option.git_directory = os.path.abspath(option.git_directory)
+    #if option.git_directory:
+    #    option.git_directory = os.path.abspath(option.git_directory)
 
     os.chdir(os.path.dirname(__file__))
     # check the haproxy-dconv repository version
-    dconv_version = git_parser.get_git_version_from_cwd()
-    if not dconv_version:
-        sys.exit(1)
-    haproxy_version = git_parser.get_git_version_in_path(
-                            option.git_directory
-                      )
+    #dconv_version = git_parser.get_git_version_from_cwd()
+    #if not dconv_version:
+    #    sys.exit(1)
+    #haproxy_version = git_parser.get_git_version_in_path(
+    #                        option.git_directory
+    #                  )
+    haproxy_version = option.version
     converter.convert_all(files, option.output_directory, option.base,
-                          version=dconv_version, haproxy_version=haproxy_version)
+                          version="0.4.2", haproxy_version=haproxy_version)
 
 
 if __name__ == '__main__':
